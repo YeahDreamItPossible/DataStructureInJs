@@ -5,7 +5,11 @@
 // 空间复杂度o(log(n))
 // 不稳定
 
-const quickSort = arr => {
+// 思想
+// 分治法
+// 把一个串行分为两个子串行
+
+const quickSort1 = arr => {
   if (
     !Array.isArray(arr) ||
     (Array.isArray(arr) && arr.length <= 1)
