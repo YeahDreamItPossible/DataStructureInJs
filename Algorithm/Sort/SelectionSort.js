@@ -1,4 +1,9 @@
 // 选择排序
+// 平均时间复杂度o(n^2)
+// 最好情况o(n^2)
+// 最坏情况o(n^2)
+// 空间复杂度o(1)
+// 不稳定
 const selectionSort = arr => {
   if (
     !Array.isArray(arr) ||

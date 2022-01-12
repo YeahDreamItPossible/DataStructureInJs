@@ -1,6 +1,9 @@
 const { bubbleSort } = require('./BubbleSort')
 const { selectionSort } = require('./SelectionSort')
 const { insertSort } = require('./InsertSort')
+const { quickSort } = require('./QuickSort')
+
+const { mergeSort } = require('./MergeSort')
 
 const getRandom = max => Math.round(Math.random() * max)
 
@@ -26,6 +29,8 @@ const arr = initArray()
 console.log('before: ', arr)
 // const sortedArr = sorter(arr, bubbleSort)
 // const sortedArr = sorter(arr, selectionSort)
-const sortedArr = sorter(arr, insertSort)
+// const sortedArr = sorter(arr, insertSort)
+// const sortedArr = sorter(arr, quickSort)
+const sortedArr = sorter(arr, mergeSort)
 console.log('after: ', sortedArr)
 console.log('是否升序: ' + isAscending(sortedArr))
