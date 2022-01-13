@@ -4,10 +4,11 @@ const { insertSort } = require('./InsertSort')
 const { shellSort } = require('./ShellSort')
 const { quickSort } = require('./QuickSort')
 const { mergeSort } = require('./MergeSort')
+const { countSort } = require('./CountSort')
 
 const getRandom = max => Math.round(Math.random() * max)
 
-const initArray = (length = 100, max = 10000) => {
+const initArray = (length = 10, max = 100) => {
   return new Array(length).fill(0).map(_ => getRandom(max))
 }
 
@@ -32,6 +33,7 @@ console.log('before: ', arr)
 // const sortedArr = sorter(arr, insertSort)
 // const sortedArr = sorter(arr, quickSort)
 // const sortedArr = sorter(arr, mergeSort)
-const sortedArr = sorter(arr, shellSort)
+// const sortedArr = sorter(arr, shellSort)
+const sortedArr = sorter(arr, countSort)
 console.log('after: ', sortedArr)
 console.log('是否升序: ' + isAscending(sortedArr))
