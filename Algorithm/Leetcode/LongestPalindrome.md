@@ -44,4 +44,41 @@ const longestPalindrome = s => {
 ## 动态规划
 ```js
 // 状态转移方式
+// dp[i][j] = (s[i] == s[j]) and dp[i + 1][j - 1]
+const longestPalindrome = s => {
+  if (s.length <= 1) {
+    return s
+  }
+
+  let max = 1
+  let str = s[0]
+
+  let len = s.length
+  let dp = new Array(len).fill(new Array().fill(false))
+
+  for (let i = 0; i < len; i++) {
+    dp[i][i] = true
+  }
+
+  for (let i = 1; i < len; i++) {
+    for (let j = 0; j < i; j++) {
+      if (s[i] !== s[j]) {
+        dp[j][i] = false
+      } else {
+        if (i - j < 3) {
+          dp[j][i] = true
+        } else {
+          dp[j][i] = dp[j + 1][i - 1]
+        }
+      }
+      
+      if (dp[j][i] && (i + 1 - j) > max) {
+        max = i + 1 - j
+        str = s.slice(j, i + 1)
+      }
+    }
+  }
+
+  return str
+}
 ```
