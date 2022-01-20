@@ -1,57 +1,35 @@
 // 中心扩散法
 const longestPalindrome = function (s) {
   if (s.length <= 1) {
-    return s
+    return s.length
   }
-
-  let maxlength = 1
-  let str = s[0]
 
   let len = s.length
+  let arm = 1
+  let maxlength = 1
+  let map = new Map()
+  map.set(s[0], true)
 
-  let left, right, flag = false
-  for (let i = 1; i < len; i++) {
-    left = right = i
-    while (left >= 0 && s[left] === s[i]) {
-      flag = true
-      left--
+  for (let i = 0; i < len; i++) {
+    while (!map.has(s[i + arm]) && arm + i < len) {
+      map.set(s[i + arm], true)
+      maxlength = Math.max(maxlength, arm + 1)
+      arm += 1
     }
 
-    while (right < len && s[right] === s[i]) {
-      flag = true
-      right++
+    if (i + arm === len) {
+      break
     }
 
-    console.log(i, left, right, s[left], s[right])
-    while (
-      left >= 0 &&
-      right < len &&
-      left !== right &&
-      s[left] === s[right]
-    ) {
-      flag = true
-      left--
-      right++
-    }
-
-    if (flag) {
-      right--
-      left++
-    }
-
-    if (right - left + 1 > maxlength) {
-      maxlength = right - left + 1
-      str = s.slice(left, right + 1)
-      console.log(left, right, i, str)
-    }
+    map.delete(s[i])
   }
 
-  console.log(str)
+  console.log(maxlength)
 
-  return str
+  return maxlength
 };
 
 // const str = "aacabdkacaa"
 // const str = "cbabc"
-const str = "cbbd"
+const str = "abcabcbb"
 longestPalindrome(str)
