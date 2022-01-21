@@ -1,35 +1,47 @@
-// 中心扩散法
-const longestPalindrome = function (s) {
-  if (s.length <= 1) {
-    return s.length
+const initArr = (m, n) => {
+  let arr = []
+  
+  for (let i = 0; i < m; i++) {
+      arr[i] = []
+      for (let j = 0; j < n; j++) {
+          if (
+              i === m - 1 ||
+              j === n -1
+          ) {
+              arr[i][j] = 1
+          }
+          else {
+              arr[i][j] = 0
+          }
+      }
   }
 
-  let len = s.length
-  let arm = 1
-  let maxlength = 1
-  let map = new Map()
-  map.set(s[0], true)
+  return arr
+}
 
-  for (let i = 0; i < len; i++) {
-    while (!map.has(s[i + arm]) && arm + i < len) {
-      map.set(s[i + arm], true)
-      maxlength = Math.max(maxlength, arm + 1)
-      arm += 1
-    }
 
-    if (i + arm === len) {
-      break
-    }
-
-    map.delete(s[i])
+var uniquePaths = function(m, n) {
+  if (m === 1 || n === 1) {
+      return 1
   }
 
-  console.log(maxlength)
+  let dp = initArr(m, n)
 
-  return maxlength
-};
+  let i = m - 2
+  
+  while (i >= 0) {
+    let j = n - 2
+    while (j >= 0) {
+      dp[i][j] = dp[i + 1][j] + dp[i][j + 1]
+      j--
+    }
+    i--
+  }
 
-// const str = "aacabdkacaa"
-// const str = "cbabc"
-const str = "abcabcbb"
-longestPalindrome(str)
+  console.log(dp)
+  return dp[0][0]
+}
+
+console.log(uniquePaths(3, 7))
+
+
