@@ -1,19 +1,8 @@
 class Node {
-  constructor (key, value) {
-    this.setKey(key)
+  constructor (value) {
     this.setValue(value)
     this.setLeft(null)
     this.setRight(null)
-    this.setParent(null)
-  }
-
-  setKey (key = '') {
-    this.key = key
-    return this
-  }
-
-  getKey () {
-    return this.key
   }
 
   setValue (value) {
@@ -27,7 +16,7 @@ class Node {
 
   setLeft (left = null) {
     if (left && !(left instanceof Node)) {
-      throw new Error('expect the left is the instance of Node but noe')
+      throw new Error('expect the left is the instance of Node but not')
     }
     this.left = left || null
     return this
@@ -43,7 +32,7 @@ class Node {
 
   setRight (right) {
     if (right && !(right instanceof Node)) {
-      throw new Error('expect the right is the instance of Node but noe')
+      throw new Error('expect the right is the instance of Node but not')
     }
     this.right = right || null
     return this
@@ -57,29 +46,19 @@ class Node {
     return this.right instanceof Node
   }
 
-  setParent (parent) {
-    if (parent && !(parent instanceof Node)) {
-      throw new Error('expect the right is the instance of Node but noe')
+  compare (a) {
+    if (!a instanceof Node) {
+      throw new Error('expect the compared node is the instance of Node but not')
     }
-    this.parent = parent || null
-    return this
-  }
-
-  getParent () {
-    return this.parent
-  }
-
-  hasParent () {
-    return this.parent instanceof Node
-  }
-
-  isRoot () {
-    return !!this.parent
-  }
-
-  isLeaf () {
-    return !this.hasLeft && !this.hasRight()
+    if (this.value > a.value) {
+      return 1
+    }
+    else if (this.value < a.value) {
+      return -1
+    } else {
+      return 0
+    }
   }
 }
 
-export default Node
+module.exports = Node
