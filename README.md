@@ -23,6 +23,13 @@ the description of data-structure in JS
 
 * []()
 
+
+# 刷题
+
+[最长无重复子数组]()
+
+[设计LRU缓存结构]()
+
 # 参考
 
 1. https://github.com/datastructures-js
