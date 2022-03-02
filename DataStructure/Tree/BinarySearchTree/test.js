@@ -56,5 +56,6 @@ console.log('后序遍历: ', isSame(binarySearchTree.postOrder(), resultInPostO
 
 console.log('Stack辅助遍历')
 console.log('先序遍历: ', isSame(binarySearchTree.preOrderByStack(), resultInPreOrder))
-console.log('中序遍历: ', isSame(binarySearchTree.inOrderByStack(), resultInPreOrder))
+// console.log('中序遍历: ', isSame(binarySearchTree.inOrderByStack(), resultInPreOrder))
 console.log('层序遍历: ', isSame(binarySearchTree.levelOrderByStack(), resultInLevelOrder))
+console.log('层序遍历: ', isSame(binarySearchTree.levelOrderByQueue(), resultInLevelOrder))

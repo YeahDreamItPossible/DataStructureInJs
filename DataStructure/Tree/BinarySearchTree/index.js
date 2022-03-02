@@ -111,126 +111,163 @@ class BinarySearchTree {
 
   // 先序遍历(递归实现)
   preOrder () {
-    let result = []
-    this._preOreder(this.root, result)
-    return result
+    let nodes = []
+    this._preOreder(this.root, nodes)
+    return nodes
   }
 
-  _preOreder (node, result) {
+  _preOreder (node, nodes) {
     if (node) {
-      result.push(node.value)
-      if (node.left) this._preOreder(node.left, result)
-      if (node.right) this._preOreder(node.right, result)
+      nodes.push(node.value)
+      if (node.left) this._preOreder(node.left, nodes)
+      if (node.right) this._preOreder(node.right, nodes)
     }
   }
 
   // 中序遍历(递归实现)
   inOrder () {
-    let result = []
-    this._inOrder(this.root, result)
-    return result
+    let nodes = []
+    this._inOrder(this.root, nodes)
+    return nodes
   }
 
-  _inOrder (node, result) {
+  _inOrder (node, nodes) {
     if (node) {
-      if (node.left) this._inOrder(node.left, result)
-      result.push(node.value)
-      if (node.right) this._inOrder(node.right, result)
+      if (node.left) this._inOrder(node.left, nodes)
+      nodes.push(node.value)
+      if (node.right) this._inOrder(node.right, nodes)
     }
   }
 
-  // 后序遍历
+  // 后序遍历(递归实现)
   postOrder () {
-    let result = []
-    this._postOrder(this.root, result)
-    return result
+    let nodes = []
+    this._postOrder(this.root, nodes)
+    return nodes
   }
 
-  _postOrder (node, result) {
+  _postOrder (node, nodes) {
     if (node) {
-      if (node.left) this._postOrder(node.left, result)
-      if (node.right) this._postOrder(node.right, result)
-      result.push(node.value)
+      if (node.left) this._postOrder(node.left, nodes)
+      if (node.right) this._postOrder(node.right, nodes)
+      nodes.push(node.value)
     }
   }
 
   // 层序遍历
   levelOrder () {
-    let result = []
+    let nodes = []
 
-    return result
+    return nodes
   }
 
-  // 层序遍历
+  // 层序遍历(Stack)
   levelOrderByStack () {
-    let result = []
+    let nodes = []
     if (!this.root) {
-      return result
+      return nodes
+    }
+
+    let stack = []
+    // 入栈
+    stack.unshift(this.root)
+    let level = []
+    let currentNode = null
+    while (stack.length) {
+      level = stack.slice()
+      nodes = nodes.concat(level.map(node => node.value))
+      level = level.reverse()
+      stack = []
+      while (level.length) {
+        // 出栈
+        currentNode = level.shift()
+        // 入栈
+        if (currentNode.right) stack.unshift(currentNode.right)
+        if (currentNode.left) stack.unshift(currentNode.left)
+      }
+    }
+
+    return nodes
+  }
+
+  // 层序遍历(Queue)
+  levelOrderByQueue () {
+    let nodes = []
+    if (!this.root) {
+      return nodes
     }
 
     // 队列
-    let nodes = [ this.root ]
+    let queue = []
+    // 入队
+    queue.push(this.root)
+    let level = []
     let currentNode = null
-    while (nodes.length) {
-      currentNode = nodes[0]
-      result.push(currentNode.value)
-      nodes = nodes.slice(1)
-      if (currentNode.left) nodes.push(currentNode.left)
-      if (currentNode.right) nodes.push(currentNode.right)
+    while (queue.length) {
+      level = queue.slice()
+      queue = []
+      while (level.length) {
+        // 出队
+        currentNode = level.shift()
+        // 入队
+        if (currentNode) nodes.push(currentNode.value)
+        if (currentNode && currentNode.left) queue.push(currentNode.left)
+        if (currentNode && currentNode.right) queue.push(currentNode.right)
+      }
     }
 
-    return result
+    return nodes
   }
 
-  // 先序遍历
+  // 先序遍历(Stack)
   preOrderByStack () {
-    let result = []
+    let nodes = []
     if (!this.root) {
-      return result
+      return nodes
     }
 
-    let nodes = [ this.root ]
+    let stack = [ this.root ]
     let currentNode = null
 
-    while (nodes.length) {
+    while (stack.length) {
       // 出栈
-      currentNode = nodes[0]
-      result.push(currentNode.value)
-      nodes = nodes.slice(1)
+      currentNode = stack.shift()
+      nodes.push(currentNode.value)
       // 入栈
-      if (currentNode.right) nodes.unshift(currentNode.right)
-      if (currentNode.left) nodes.unshift(currentNode.left)
+      if (currentNode.right) stack.unshift(currentNode.right)
+      if (currentNode.left) stack.unshift(currentNode.left)
     }
 
-    return result
+    return nodes
   }
 
-  // 中序遍历
-  // TODO: 暂时没想好用Stack 或 Queue来实现 操作流程也没想好 OhMyGod
+  // 中序遍历(Stack)
   inOrderByStack () {
-    let result = []
     let nodes = []
+
+    if (!this.root) {
+      return nodes
+    }
+
+    let stack = []
+    // 入栈
+    if (this.root.right) stack.unshift(this.root.right)
+    stack.unshift(this.root)
+    if (this.root.left) stack.unshift(this.root.left)      
+
     let currentNode = null
-
-    if (this.root) {
-      if (this.root.right) nodes.push(this.root.right)
-      nodes.push(this.root)
-      if (this.root.left) nodes.push(this.root.left)      
+    while (stack.length) {
+      // 出栈
+      currentNode = stack.shift()
+      nodes.push(currentNode.value)
+      // 入栈
+      if (currentNode.right) stack.unshift(currentNode.right)
+      stack.unshift(currentNode)
+      if (currentNode.left) stack.unshift(currentNode.left)
     }
 
-    while (nodes.length) {
-      currentNode = nodes[nodes.length - 1]
-      result.push(currentNode.value)
-      nodes = nodes.slice(1)
-      if (currentNode.right) nodes.push(currentNode.right)
-      nodes.push(currentNode)
-      if (currentNode.left) nodes.push(currentNode.left)
-    }
-
-    console.log(result)
-
-    // nodes.forEach(node => result.push(node.value))
-    return result
+    console.log(nodes)
+    return nodes
   }
 
   getSize () {
